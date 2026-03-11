@@ -4,6 +4,7 @@ pipeline {
     environment {
         IMAGE_NAME = "abdelhakemt/proyecto-ci-cd-abdelhak"
         IMAGE_TAG = "latest"
+        KUBECONFIG = "/var/lib/jenkins/.kube/config"
     }
 
     stages {
@@ -47,8 +48,8 @@ pipeline {
         stage('deploy') {
             steps {
                 sh '''
-                kubectl apply -f deployment.yaml
-                kubectl apply -f service.yaml
+                kubectl apply --validate=false -f deployment.yaml
+                kubectl apply --validate=false -f service.yaml
                 '''
             }
         }
